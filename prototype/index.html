@@ -827,8 +827,8 @@ function copilotRespond(query, scope, state){
 /* ============================================================
    PRIMITIVES
    ============================================================ */
-function KPITile({label,value,tone,sub}){
-  return <div className="kpi">
+function KPITile({label,value,tone,sub,bg}){
+  return <div className="kpi" style={bg?{background:bg}:null}>
     <div className="kpi-label">{label}</div>
     <div className="kpi-value tnum" style={tone?{color: tone==='good'?'var(--good-text)':tone==='warn'?'var(--warn-text)':tone==='crit'?'var(--crit-text)':'inherit'}:null}>{value}</div>
     {sub && <div className="kpi-delta" style={{color:'var(--ink-3)',fontWeight:500}}>{sub}</div>}
@@ -1056,7 +1056,7 @@ function Dashboard(){
     </div>
     <div className="kpi-row">
       <KPITile label="Active Projects" value={activeList.length} sub={`${scopeProjects.length-activeList.length} completed`}/>
-      <KPITile label="Projects At Risk" value={atRiskCount} tone={atRiskCount>0?'warn':'good'} sub={`${activeList.length?Math.round(atRiskCount/activeList.length*100):0}% of active portfolio`}/>
+      <KPITile label="Projects At Risk" value={atRiskCount} tone={atRiskCount>0?'warn':'good'} bg="var(--good-wash)" sub={`${activeList.length?Math.round(atRiskCount/activeList.length*100):0}% of active portfolio`}/>
       <KPITile label="Budget Variance" value={fmtPct(variancePct)} tone={variancePct>8?'crit':variancePct>3?'warn':'good'} sub={`${fmtMoney(totalForecast,{compact:true})} forecast`}/>
       <KPITile label="Tasks Overdue" value={overdueTasks} tone={overdueTasks>0?'crit':'good'} sub="across active projects"/>
     </div>
